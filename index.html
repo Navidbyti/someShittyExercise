@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Object-oriented JavaScript example</title>
+  </head>
+
+  <body>
+    <form>
+      <label for="first">First: </label>
+      <input id = 'first' type="text" >
+      <br>
+      <lable for='last'>Last: </lable>
+      <input id ='last' type="text" >
+      <br>
+      <lable for ='age'>Age:</lable>
+      <input id='age' type="number" >
+      <br><p>Please select your gender:</p>
+      <input id ='male'type='radio' name='gender' value='male' checked>
+      <lable for='male'>Male</lable>
+      <input id ='female' type = 'radio' name = 'gender' value='female'>
+      <lable for='female'>Female</lable>
+      <p>Add your interest seperated by commas (,)</p>
+      <lable for = 'intrest'>Interests:</lable>
+      <input type="text" id='intrest'>
+      <br><br>
+      <h2 id='submit'>Click here to see bio.</h2>
+      
+      
+    </form>
+  </body>
+
+    <script>
+     function Person(first, last , age, gender , interests){
+        this.name = {
+          first : first ,
+          last : last
+        };
+        this.age = age;
+        this.gender = gender;
+        this.interests = interests;
+       // Uses age value to figure out to use he or she or they.
+        if(this.gender.toLowerCase() === 'male') {
+          ifHeorShe = ' He likes';
+        }else if (this.gender.toLowerCase() === 'female'){
+          ifHeorShe = ' She likes'
+        }else {
+          ifHeorShe = ' They like'
+        }
+        this.heOrShe = ifHeorShe;
+        // will recognize the interest array length and do stuff idk i cant english
+        this.interInBio = '';
+        if (typeof(interests) == 'string'){
+          this.interInBio = interests;
+        }else{
+        for(i = 0; i < interests.length ; i++ ){
+          if ( i === interests.length -1){
+            this.interInBio += 'and ' + interests[i];
+          }else{
+            this.interInBio += interests[i] + ', '
+          }
+        }
+      }
+       
+
+
+        this.bio = function(){
+          alert( this.name.first + ' ' + this.name.last + ' is ' + this.age + ' years old.' + this.heOrShe +' ' + this.interInBio+'.');
+        }
+        this.greeting = function() {
+          alert('Hi I\'m ' + this.name.first + '.');
+        }
+
+     }
+
+     let bob = new Person('Bob', 'Smith' , 32, 'male' , ['music' , 'skiing']);
+     let jackie = new Person( 'Jackie' , 'Smith' , 25 , 'female' , ['Music', 'BlowJobs', 'Nice stuffs']);
+     let maede = new Person( 'Maede' , 'Smith' , 15 , 'The fuck would I know?!' , 'Being gay')
+    
+     //User created objects via input tags
+     const submit = document.getElementById('submit');
+     submit.addEventListener('click' , function(){
+       
+       let form = [];
+       for (let i=0; i<5 ; i++){
+         switch(i){
+          case 0:
+             form[i] = document.getElementById('first').value;
+             break;
+
+             case 1:
+             form[i] = document.getElementById('last').value;
+             break;
+
+             case 2:
+             form[i] = document.getElementById('age').value;
+             break;
+
+             case 3:
+               const maleRadio = document.getElementById('male');
+               const femaleRadio = document.getElementById('female');
+             if (maleRadio){
+               form[i] = 'male';
+             }else if (femaleRadio) {form[i] = 'female';}
+             break;
+
+             case 4:
+             let int1 = document.getElementById('intrest').value;
+             form[i] = int1.split(',');
+             break; 
+
+             default:
+               break;
+         }
+       }
+       let theBioThing = new Person( form[0], form[1],form[2], form[3], form[4]);
+       theBioThing.bio();
+     })
+
+    </script>
+</html>
